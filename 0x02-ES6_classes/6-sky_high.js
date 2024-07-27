@@ -1,22 +1,23 @@
-export default class Building {
-  constructor(sqft) {
-    if (this.constructor !== Building) {
-      const props = Object.getOwnPropertyNames(this.constructor.prototype);
-      if (!props.find((e) => e === 'evacuationWarningMessage')) {
-        throw new Error('Class extending Building must override evacuationWarningMessage');
-      }
-    }
-    this._sqft = sqft;
+import Building from './5-building';
+
+export default class SkyHighBuilding extends Building {
+  constructor(sqft, floors) {
+    super(sqft);
+    this._floors = floors;
   }
 
-  get sqft() {
-    return this._sqft;
+  get floors() {
+    return this._floors;
   }
 
-  set sqft(sqft) {
-    if ((typeof sqft !== 'number') && (sqft instanceof Number)) {
-      throw new TypeError('Sqft must be a number');
+  set floors(floors) {
+    if (typeof floors !== 'number') {
+      throw new TypeError('Floors must be a number');
     }
-    this._sqft = sqft;
+    this._floors = floors;
+  }
+
+  evacuationWarningMessage() {
+    return `Evacuate slowly the ${this._floors} floors`;
   }
 }
